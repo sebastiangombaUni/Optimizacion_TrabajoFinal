@@ -5,6 +5,7 @@ k planta k /k1*k3/
 l bodega l /l1*l4/
 m centro de distribuccion m /m1*m12/
 n supermecado n /n1*n3/
+*kugykbj
 ;
 
 parameters
