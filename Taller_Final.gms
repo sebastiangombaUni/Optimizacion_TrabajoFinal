@@ -26,7 +26,37 @@ k1  15  48  45  35
 k2  10  15  25  40
 k3  5   20  10  25;
 
+table Bod_cd_norte(l,n)
 
+    n1  n2  n3
+l1  25  30  35  
+l2  150 200 250
+l3  75  90  105
+l4  75  90  105;
+
+table Bod_cd_sur(l,s)
+
+    s1  s2  s2
+l1  150 200 250
+l2  25  30  35
+l3  75  90  105
+l4  75  90  105;
+
+table Bod_cd_oriente(l,or)
+
+    or1 or2 or3
+l1  75  90  105
+l2  75  90  105
+l3  25  30  35
+l4  150 200 250;
+
+table Bod_cd_occidente(l,oc)
+
+    oc1 oc2 oc3
+l1  75  90  105
+l2  75  90  105 
+l3  150 200 250
+l4  25  30  35;
 
 Variable
 z1 FO;
