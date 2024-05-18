@@ -15,7 +15,7 @@ soc supermercado occidente /soc1*soc3/
 ;
 
 parameters
-Costo_Bebida costo de elbaroacion de bebida i /i1 4000, i2 3500/
+Costo_Producto costo de elbaroacion de producto i /i1 4000, i2 3500/
 Costo_Comp costo del componente j/j1 10, j2 700, j3 1600, j4 1100/
 Disp_Comp disponibilidad de componente j /j1 100000000, j2 20000000, j3 16000000, j4 24000000/
 Cap_Planta capacidad de las plantas /k1 150000, k2 250000, k3 450000/
@@ -39,10 +39,17 @@ Variable
 z1 FO;
 
 Integer variable
-x(i,j) numero tipo de bebida i con el componente j
-y(k,l) numero de bebidas transportadas de la planta k a la bodega l
-z(l,m) numero de bebidas transportadas de la bodega l al CD m
-p(m,n) numero de bebidas transportadas del CD m al supermercado n
+x(i,j) numero tipo de producto i con el componente j
+y(k,l) numero de productos transportadas de la planta k a la bodega l
+z(l,n) numero de productos transportadas de la bodega l al CD norte
+a(l,s) numero de productos transportadas de la bodega l al CD sur
+b(l,or) numero de productos transportadas de la bodega l al CD oriente
+c(l,oc) numero de productos transportadas de la bodega l al CD occidente
+d(n,sn) numero de productos transportadas del cd norte a los supermercados norte
+e(s,ss) numero de productos transportadas del cd sur a los supermercados sur
+f(or,sor) numero de productos transportadas del cd oriente a los supermercados oriente
+g(oc,soc) numero de productos transportadas del cd occidente a los supermercados occidente
+
 ;
 
 Equation
