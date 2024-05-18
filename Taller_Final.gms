@@ -1,10 +1,17 @@
 sets
-i Presentacion de producto i /i1,i2/
-j componente j/j1*j4/
-k planta k /k1*k3/
-l bodega l /l1*l4/
-m centro de distribuccion m /m1*m12/
-n supermecado n /n1*n3/
+i Producto i /i1,i2/
+j Componente j/j1*j4/
+k Planta k /k1*k3/
+l Bodega l /l1*l4/
+n Cd norte /n1*n3/
+s Cd sur  /s1*s3/
+or Cd oriente /or1*or3/
+oc Cd occidente /oc1*oc3/
+sn supermercado norte /sn1*sn3/
+ss supermercado sur /ss1*ss3/
+sor supermercado oriente /sor1*sor3/
+soc supermercado occidente /soc1*soc3/
+
 ;
 
 parameters
