@@ -65,6 +65,37 @@ l2  75  90  105
 l3  150 200 250
 l4  25  30  35;
 
+table cd_super_norte(n,sn)
+
+    sn1 sn2 sn3
+n1  15  30  25
+n2  25  40  35
+n3  15  25  43
+;
+
+table cd_super_sur(s,ss)
+
+    ss1 ss2 ss3
+s1  15  30  25
+s2  25  40  35
+s3  15  25  43
+;
+
+table cd_super_oriente(es),se)
+
+    se1 se2 se3
+es1  15  30  25
+es2  25  40  35
+es3  15  25  43
+;
+
+table cd_super_occidente(oc,soc)
+
+    soc1 soc2 soc3
+oc1  15  30  25
+oc2  25  40  35
+oc3  15  25  43
+;
 Variable
 z1 FO;
 
@@ -123,56 +154,43 @@ FO..z1 =e= sum((i,j), x(i,j)*Costo_Comp(j))
          + sum((oc,soc), g(oc,soc)*Demanda_Super(soc));
          
 * Restricciones de disponibilidad de componentes
-R1(j)..
-    sum(i, x(i,j)) =l= Disp_Comp(j);
+R1(j)..sum(i, x(i,j)) =l= Disp_Comp(j);
 
 * Restricciones de capacidad de bodegas
-R2(l)..
-    sum(k, y(k,l)) =l= Cap_Bodega(l);
+R2(l)..sum(k, y(k,l)) =l= Cap_Bodega(l);
 
 * Restricciones de capacidad de CD norte
-R3(n)..
-    sum(l, z(l,n)) =l= Cap_CD(n);
+R3(n)..sum(l, z(l,n)) =l= Cap_CD(n);
 
 * Restricciones de capacidad de CD sur
-R4(s)..
-    sum(l, a(l,s)) =l= Cap_CD(s);
+R4(s)..sum(l, a(l,s)) =l= Cap_CD(s);
 
 * Restricciones de capacidad de CD oriente
-R5(es)..
-    sum(l, b(l,es)) =l= Cap_CD(es);
+R5(es)..sum(l, b(l,es)) =l= Cap_CD(es);
 
 * Restricciones de capacidad de CD occidente
-R6(oc)..
-    sum(l, c(l,oc)) =l= Cap_CD(oc);
+R6(oc)..sum(l, c(l,oc)) =l= Cap_CD(oc);
 
 * Restricciones de demanda de supermercados norte
-R7(sn)..
-    sum(n, d(n,sn)) =g= Demanda_Super(sn);
+R7(sn)..sum(n, d(n,sn)) =g= Demanda_Super(sn);
 
 * Restricciones de demanda de supermercados sur
-R8(ss)..
-    sum(s, e(s,ss)) =g= Demanda_Super(ss);
+R8(ss)..sum(s, e(s,ss)) =g= Demanda_Super(ss);
 
 * Restricciones de demanda de supermercados oriente
-R9(ses)..
-    sum(es, f(es,ses)) =g= Demanda_Super(ses);
+R9(ses)..sum(es, f(es,ses)) =g= Demanda_Super(ses);
 
 * Restricciones de demanda de supermercados occidente
-R10(soc)..
-    sum(oc, g(oc,soc)) =g= Demanda_Super(soc);
+R10(soc)..sum(oc, g(oc,soc)) =g= Demanda_Super(soc);
 
 * Restricciones de capacidad de plantas
-R11(k)..
-    sum(i, x(i,j)) =l= Cap_Planta(k);
+R11(k)..sum(i, x(i,j)) =l= Cap_Planta(k);
 
 * Restricción para el producto de tipo 1 con el componente 1
-Restriccion_Producto1_Componente1 ..
-    x('i1', 'j1') =l= 0.4 * sum(j, x('i1', j));
+Restriccion_Producto1_Componente1 ..x('i1', 'j1') =l= 0.4 * sum(j, x('i1', j));
 
 * Restricción para el producto de tipo 1 con el componente 2
-Restriccion_Producto1_Componente2 ..
-    x('i1', 'j2') =l= 0.2 * sum(j, x('i1', j));
+Restriccion_Producto1_Componente2 ..x('i1', 'j2') =l= 0.2 * sum(j, x('i1', j));
 
 * Restricción para el producto de tipo 1 con el componente 3
 Restriccion_Producto1_Componente3 ..
