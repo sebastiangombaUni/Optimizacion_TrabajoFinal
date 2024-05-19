@@ -5,11 +5,11 @@ k Planta k /k1*k3/
 l Bodega l /l1*l4/
 n Cd norte /n1*n3/
 s Cd sur  /s1*s3/
-or Cd oriente /or1*or3/
+es Cd este /or1*or3/
 oc Cd occidente /oc1*oc3/
 sn supermercado norte /sn1*sn3/
 ss supermercado sur /ss1*ss3/
-sor supermercado oriente /sor1*sor3/
+ses supermercado este /sor1*sor3/
 soc supermercado occidente /soc1*soc3/
 
 ;
@@ -73,62 +73,129 @@ x(i,j) numero tipo de producto i con el componente j
 y(k,l) numero de productos transportadas de la planta k a la bodega l
 z(l,n) numero de productos transportadas de la bodega l al CD norte
 a(l,s) numero de productos transportadas de la bodega l al CD sur
-b(l,or) numero de productos transportadas de la bodega l al CD oriente
+b(l,es) numero de productos transportadas de la bodega l al CD este
 c(l,oc) numero de productos transportadas de la bodega l al CD occidente
 d(n,sn) numero de productos transportadas del cd norte a los supermercados norte
 e(s,ss) numero de productos transportadas del cd sur a los supermercados sur
-f(or,sor) numero de productos transportadas del cd oriente a los supermercados oriente
+f(or,ses) numero de productos transportadas del cd oriente a los supermercados este
 g(oc,soc) numero de productos transportadas del cd occidente a los supermercados occidente
 
 ;
 
-Equation
+Equations
+    FO funcion objetivo
+    R1(j) disponibilidad de componentes
+    R2(l) capacidad de bodega
+    R3(n) capacidad de CD norte
+    R4(s) capacidad de CD sur
+    R5(es) capacidad de CD este
+    R6(oc) capacidad de CD occidente
+    R7(sn) demanda de supermercados norte
+    R8(ss) demanda de supermercados sur
+    R9(ses) demanda de supermercados este
+    R10(soc) demanda de supermercados occidente
+    R11(k) capacidad de plantas
+    Balance_Planta(k)
+    Balance_Bodega(l)
+    Balance_CD_Norte(n)
+    Balance_CD_Sur(s)
+    Balance_CD_Oriente(or)
+    Balance_CD_Occidente(oc)
+    Restriccion_Producto1_Componente1
+    Restriccion_Producto1_Componente2
+    Restriccion_Producto1_Componente3
+    Restriccion_Producto1_Componente4
+    Restriccion_Producto2_Componente1
+    Restriccion_Producto2_Componente2
+    Restriccion_Producto2_Componente3
+    Restriccion_Producto2_Componente4
+    ;
 
-R1 disponibilidad componentes
-R2 cap bodega
-R3 cap cd
-R4 demanda cliente 1
-R5 demanda cliente 2
-R6 demanda cliente 3
-R7 balance fabrica a bodega
-R8 balance bodega a cliente
-R9 Resriccion envio fabrica.cliente
-R10
-R11
-R12
-R13
-R14
+FO..z1 =e= sum((i,j), x(i,j)*Costo_Comp(j)) 
+         + sum((k,l), y(k,l)*Planta_Bod(k,l)) 
+         + sum((l,n), z(l,n)*Bod_CD_Norte(l,n)) 
+         + sum((l,s), a(l,s)*Bod_CD_Sur(l,s)) 
+         + sum((l,es), b(l,es)*Bod_CD_Oriente(l,es)) 
+         + sum((l,oc), c(l,oc)*Bod_CD_Occidente(l,oc))
+         + sum((n,sn), d(n,sn)*Demanda_Super(sn))
+         + sum((s,ss), e(s,ss)*Demanda_Super(ss))
+         + sum((es,ses), f(es,ses)*Demanda_Super(ses))
+         + sum((oc,soc), g(oc,soc)*Demanda_Super(soc));
+         
+* Restricciones de disponibilidad de componentes
+R1(j)..
+    sum(i, x(i,j)) =l= Disp_Comp(j);
 
-FO funcion objetivo;
+* Restricciones de capacidad de bodegas
+R2(l)..
+    sum(k, y(k,l)) =l= Cap_Bodega(l);
 
-*Restricciones de capacidad
+* Restricciones de capacidad de CD norte
+R3(n)..
+    sum(l, z(l,n)) =l= Cap_CD(n);
 
-R1..sum((i,j),x(i,j))=L=Disp_Comp;
-R2(j)..sum(i,x(i,j))=L=cap_bodega(j);
-R3(k)..sum(j,y(j,k))=L=cap_cd(k);
+* Restricciones de capacidad de CD sur
+R4(s)..
+    sum(l, a(l,s)) =l= Cap_CD(s);
 
-*Restricciones de demanda de clientes
+* Restricciones de capacidad de CD oriente
+R5(es)..
+    sum(l, b(l,es)) =l= Cap_CD(es);
 
-R4..sum(k,z(k,"l1"))+sum(i,w(i,"l1"))=G=demanda_clientes("l1");
-R5..sum(k,z(k,"l2"))+sum(i,w(i,"l2")) =G= demanda_clientes("l2") + C23;
-R6..sum(k,z(k,"l3"))+sum(i,w(i,"l3"))+C23 =G= demanda_clientes("l3");
+* Restricciones de capacidad de CD occidente
+R6(oc)..
+    sum(l, c(l,oc)) =l= Cap_CD(oc);
 
-*Restricciones de balance
+* Restricciones de demanda de supermercados norte
+R7(sn)..
+    sum(n, d(n,sn)) =g= Demanda_Super(sn);
 
-R7(j)..sum(i,x(i,j))=E=sum(k,y(j,k));
-R8(k)..sum(j,y(j,k))=E=sum(l,z(k,l));
+* Restricciones de demanda de supermercados sur
+R8(ss)..
+    sum(s, e(s,ss)) =g= Demanda_Super(ss);
 
-* Restriccion de envio fabrica-cliente
-R9..w("i2","l1")=E=0;
-R10..w("i1","l2")=E=0;
-R11..w("i2","l2")=E=0;
-R12..w("i1","l3")=E=0;
-R13..z("k2","l1")=E=0;
-R14..z("k1","l3")=E=0;
+* Restricciones de demanda de supermercados oriente
+R9(ses)..
+    sum(es, f(es,ses)) =g= Demanda_Super(ses);
 
-*Funcion objetivo
+* Restricciones de demanda de supermercados occidente
+R10(soc)..
+    sum(oc, g(oc,soc)) =g= Demanda_Super(soc);
 
-FO..z1=E=sum((i,j),x(i,j)*Fab_bod(i,j))+sum((j,k),y(j,k)*Bod_cd(j,k))+sum((k,l),z(k,l)*cd_cli(k,l))+sum((i,l),w(i,l)*Fab_cli(i,l))+(2*C23);
+* Restricciones de capacidad de plantas
+R11(k)..
+    sum(i, x(i,j)) =l= Cap_Planta(k);
 
-model taller1corte3 /all/;
-solve taller1corte3 using MIP minimizing z1;
+* Restricción para el producto de tipo 1 con el componente 1
+Restriccion_Producto1_Componente1 ..
+    x('i1', 'j1') =l= 0.4 * sum(j, x('i1', j));
+
+* Restricción para el producto de tipo 1 con el componente 2
+Restriccion_Producto1_Componente2 ..
+    x('i1', 'j2') =l= 0.2 * sum(j, x('i1', j));
+
+* Restricción para el producto de tipo 1 con el componente 3
+Restriccion_Producto1_Componente3 ..
+    x('i1', 'j3') =l= 0.2 * sum(j, x('i1', j));
+
+* Restricción para el producto de tipo 1 con el componente 4
+Restriccion_Producto1_Componente4 ..
+    x('i1', 'j4') =g= 1 - 0.4 - 0.2 - 0.2 * sum(j, x('i1', j));
+
+* Restricción para el producto de tipo 2 con el componente 1
+Restriccion_Producto2_Componente1 ..
+    x('i2', 'j1') =l= 0.3 * sum(j, x('i2', j));
+    
+* Restricción para el producto de tipo 2 con el componente 2
+Restriccion_Producto2_Componente2 ..
+    x('i2','j2')=L=0.25*sum((j,x('i2',j));)
+    
+* Restricción para el producto de tipo 2 con el componente 3
+Restriccion_Producto2_Componente3 ..
+    x('i2','j3')=L=0.2*sum((j,x('i2',j));)
+    
+* Restricción para el producto de tipo 2 con el componente 4
+Restriccion_Producto2_Componente4 ..
+    x('i2','j4')=L=0.25*sum((j,x('i2',j));)
+
+
