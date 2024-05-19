@@ -84,7 +84,7 @@ g(oc,soc) numero de productos transportadas del cd occidente a los supermercados
 
 Equation
 
-R1 cap fabrica
+R1 disponibilidad componentes
 R2 cap bodega
 R3 cap cd
 R4 demanda cliente 1
@@ -103,7 +103,7 @@ FO funcion objetivo;
 
 *Restricciones de capacidad
 
-R1(i)..sum(j,x(i,j))+sum(l,w(i,l))=L=cap_fab(i);
+R1..sum((i,j),x(i,j))=L=Disp_Comp;
 R2(j)..sum(i,x(i,j))=L=cap_bodega(j);
 R3(k)..sum(j,y(j,k))=L=cap_cd(k);
 
