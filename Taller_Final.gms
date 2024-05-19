@@ -66,6 +66,32 @@ l2  75  90  105
 l3  150 200 250
 l4  25  30  35;
 
+table cd_super_norte(n,sn)
+    sn1 sn2 sn3
+n1  15  30  25
+n2  25  40  35
+n3  15  25  43
+;    
+table cd_super_norte(s,ss)
+   ss1 ss2 ss3
+s1  15  30  25
+s2  25  40  35
+s3  15  25  43
+;
+table cd_super_oriente(es,ses)
+   ses1 ses2 ses3
+es1 15  30  25
+es2 25  40  35
+es3 15  25  43
+;
+table cd_super_occidente(oc,soc)
+   soc1 soc2 soc3
+oc1 15  30  25
+oc2 25  40  35
+oc3 15  25  43
+;
+
+
 Variable
 z1 FO;
 
