@@ -69,7 +69,7 @@ Variable
 z1 FO;
 
 Integer variable
-x(i,j) numero tipo de producto i con el componente j
+x(i,j) numero producto de tipo i oomponente j
 y(k,l) numero de productos transportadas de la planta k a la bodega l
 z(l,n) numero de productos transportadas de la bodega l al CD norte
 a(l,s) numero de productos transportadas de la bodega l al CD sur
@@ -101,30 +101,33 @@ R14
 
 FO funcion objetivo;
 
-*Restricciones de capacidad
+*Restricciones de disponibilidad
 
-R1..sum((i,j),x(i,j))=L=Disp_Comp;
-R2(j)..sum(i,x(i,j))=L=cap_bodega(j);
-R3(k)..sum(j,y(j,k))=L=cap_cd(k);
+R1..sum((i,j),x(i,j))=L=Disp_Comp(j);
 
-*Restricciones de demanda de clientes
+*Restricciones bebida 1
 
-R4..sum(k,z(k,"l1"))+sum(i,w(i,"l1"))=G=demanda_clientes("l1");
-R5..sum(k,z(k,"l2"))+sum(i,w(i,"l2")) =G= demanda_clientes("l2") + C23;
-R6..sum(k,z(k,"l3"))+sum(i,w(i,"l3"))+C23 =G= demanda_clientes("l3");
+R2..x('i1','j1')=L=0.4*sum(j,x('i1',j));
+R3..x('i1','j2')=L=0.2*sum(j,x('i1',j));
+R4..x('i1','j3')=L=0.2*sum(j,x('i1',j));
+R5..x('i1','j4')=L=0.2*sum(j,x('i1',j));
 
-*Restricciones de balance
+*Restricciones bebida 2
 
-R7(j)..sum(i,x(i,j))=E=sum(k,y(j,k));
-R8(k)..sum(j,y(j,k))=E=sum(l,z(k,l));
+R6..x('i2','j1')=L=0.3*sum(j,x('i2',j));
+R7..x('i2','j2')=L=0.25*sum((j,x('i2',j));) 
+R8..x('i2','j3')=L=0.2*sum((j,x('i2',j));)
+R9..x('i2','j4)=L=0.25*sum((j,x('i2',j));)
 
-* Restriccion de envio fabrica-cliente
-R9..w("i2","l1")=E=0;
-R10..w("i1","l2")=E=0;
-R11..w("i2","l2")=E=0;
-R12..w("i1","l3")=E=0;
-R13..z("k2","l1")=E=0;
-R14..z("k1","l3")=E=0;
+*Capacidad bodegas
+
+R10(l)um(k,y(k,l))=L=Cap_Bodega(l);
+
+*Capacidad plantas
+
+R11(k)um((i,j),x(i,j))=L=Cap_Planta(k)
+
+
 
 *Funcion objetivo
 
