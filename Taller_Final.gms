@@ -5,11 +5,11 @@ k Planta k /k1*k3/
 l Bodega l /l1*l4/
 n Cd norte /n1*n3/
 s Cd sur  /s1*s3/
-es Cd este /or1*or3/
+es Cd este /es1*es3/
 oc Cd occidente /oc1*oc3/
 sn supermercado norte /sn1*sn3/
 ss supermercado sur /ss1*ss3/
-ses supermercado este /sor1*sor3/
+ses supermercado este /ses1*ses3/
 soc supermercado occidente /soc1*soc3/
 
 ;
@@ -22,6 +22,7 @@ Cap_Planta capacidad de las plantas /k1 150000, k2 250000, k3 450000/
 Cap_Bodega capacidad de las bodegas/l1 355000, l2 250000, l3 350000, l4 325000/
 Cap_CD capacidades de los CD /m1 325000, m2 450000, m3 350000/
 Demanda_Super demanda de los supermercados /n1 420000, n2 520000, n3 150000/
+Costo_Fijo_Planta /500/;
 
 
 ;
@@ -111,7 +112,7 @@ Equations
     Restriccion_Producto2_Componente4
     ;
 
-FO..z1 =e= sum((i,j), x(i,j)*Costo_Comp(j)) 
+FO..z1 =e= sum((i,j), x(i,j)*Costo_Comp(j)+ x(i,j)*Costo_Fijo_Planta)) 
          + sum((k,l), y(k,l)*Planta_Bod(k,l)) 
          + sum((l,n), z(l,n)*Bod_CD_Norte(l,n)) 
          + sum((l,s), a(l,s)*Bod_CD_Sur(l,s)) 
@@ -138,7 +139,7 @@ R3(n)..
 R4(s)..
     sum(l, a(l,s)) =l= Cap_CD(s);
 
-* Restricciones de capacidad de CD oriente
+* Restricciones de capacidad de CD este
 R5(es)..
     sum(l, b(l,es)) =l= Cap_CD(es);
 
@@ -154,7 +155,7 @@ R7(sn)..
 R8(ss)..
     sum(s, e(s,ss)) =g= Demanda_Super(ss);
 
-* Restricciones de demanda de supermercados oriente
+* Restricciones de demanda de supermercados este
 R9(ses)..
     sum(es, f(es,ses)) =g= Demanda_Super(ses);
 
@@ -197,5 +198,8 @@ Restriccion_Producto2_Componente3 ..
 * Restricción para el producto de tipo 2 con el componente 4
 Restriccion_Producto2_Componente4 ..
     x('i2','j4')=L=0.25*sum((j,x('i2',j));)
+    
+model tallerfinal /all/;
+solve tallerfinal using MIP minimizing z1;
 
 
